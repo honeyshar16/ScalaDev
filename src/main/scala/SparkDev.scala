@@ -11,11 +11,12 @@ object SparkDev {
     val spark = SparkSession.builder.appName("WhenAndOther").master("local[4]").getOrCreate()
 
     import spark.implicits._
-    val df = List((25, "male"), (18, "female"), (10, "male"), (45, "female"), (67, "female")).toDF("age", "gender")
+    val df = List((85, "Maths"), (90, "Science"), (95, "Comp"), (45, "Social"), (70, "English")).toDF("Score", "Subject")
 
 
-    df.select(col("gender"), col("age"),
-      when(col("age") >= 18, "TRUE")
-        .otherwise("False").as("is_adult")).show()
+    df.select(col("Score"), col("Subject"),
+      when(col("Score") >= 90, "A")
+      .when(col("Score") >= 70  && col("Score") <=89, "B")
+        .otherwise("C").as("Grade")).show()
   }
 }
